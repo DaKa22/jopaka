@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\Detalle_FacturaController;
+use App\Http\Controllers\FacturaController;
+use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\ProveedorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,7 +17,15 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::group([
+    // 'middleware' => 'auth',
+    'prefix' => '/'
+], function ($router) {
+    Route::get('', function () {return view('welcome');});
 
-Route::get('/', function () {
-    return view('welcome');
+    Route::resource('cliente', ClienteController::class);
+    Route::resource('proveedor', ProveedorController::class);
+    Route::resource('factura', FacturaController::class);
+    Route::resource('producto', ProductoController::class);
+    Route::resource('detalle_factura', Detalle_FacturaController::class);
 });
