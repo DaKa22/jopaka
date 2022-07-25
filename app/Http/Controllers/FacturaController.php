@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\factura;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class FacturaController extends Controller
@@ -13,7 +15,8 @@ class FacturaController extends Controller
      */
     public function index()
     {
-        //
+        $consulta=factura::all();
+        return $consulta;
     }
 
     /**
@@ -34,7 +37,26 @@ class FacturaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $factura=factura::create([
+                'fecha'=>$request['fecha'],
+                'clientes_id'=>$request['clientes_id'],
+                'total_factura'=>$request['total_factura'],
+            ]);
+
+
+
+        } catch (QueryException $e) {
+            return response()->json([
+                'status' => 'ERROR',
+                'message' => $e->getMessage()
+            ]);
+        }finally{
+            return response()->json([
+                'status' => 'OK',
+                'message' => $factura
+            ]);
+        }
     }
 
     /**
@@ -45,7 +67,22 @@ class FacturaController extends Controller
      */
     public function show($id)
     {
-        //
+        try {
+            $consulta=factura::where('id',$id)->first();
+
+
+
+        } catch (QueryException $e) {
+            return response()->json([
+                'status' => 'ERROR',
+                'message' => $e->getMessage()
+            ]);
+        }finally{
+            return response()->json([
+                'status' => 'OK',
+                'message' => $consulta
+            ]);
+        }
     }
 
     /**
@@ -68,7 +105,31 @@ class FacturaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $factura=factura::where('id',$id)->first();
+            if (!$factura) {
+                return response()->json([
+                    'status' => 'ERROR',
+                    'message' => 'No existe el factura'
+                ]);
+            }
+            $factura->update([
+                'fecha'=>$request['fecha'],
+                'clientes_id'=>$request['clientes_id'],
+                'total_factura'=>$request['total_factura'],
+            ]);
+
+        } catch (QueryException $e) {
+            return response()->json([
+                'status' => 'ERROR',
+                'message' => $e->getMessage()
+            ]);
+        }finally{
+            return response()->json([
+                'status' => 'OK',
+                'message' => $factura
+            ]);
+        }
     }
 
     /**
@@ -79,6 +140,33 @@ class FacturaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $factura=factura::where('id',$id)->first();
+            if (!$factura) {
+                return response()->json([
+                    'status' => 'ERROR',
+                    'message' => 'No existe el factura'
+                ]);
+            }
+            if(!$factura->delete()){
+                return response()->json([
+                    'status'=>'ERROR',
+                    'mensaje'=>'El factura no fue Eliminado correctamente'
+                ]);
+            }
+
+        } catch (QueryException $e) {
+            return response()->json([
+                'status' => 'ERROR',
+                'message' => $e->getMessage()
+            ]);
+        }finally{
+            return response()->json([
+                'status' => 'ELIMINADO',
+                'mensaje'=>'El factura  fue Eliminado correctamente'
+
+            ]);
+        }
+
     }
 }

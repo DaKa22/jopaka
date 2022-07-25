@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\producto;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class ProductoController extends Controller
@@ -13,7 +15,8 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        //
+        $consulta=producto::all();
+        return $consulta;
     }
 
     /**
@@ -34,7 +37,28 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $producto=producto::create([
+                'descripcion'=>$request['descripcion'],
+                'proveedores_id'=>$request['proveedores_id'],
+                'precio_costo'=>$request['precio_costo'],
+                'precio_venta'=>$request['precio_venta'],
+                'foto'=>$request['foto'],
+            ]);
+
+
+
+        } catch (QueryException $e) {
+            return response()->json([
+                'status' => 'ERROR',
+                'message' => $e->getMessage()
+            ]);
+        }finally{
+            return response()->json([
+                'status' => 'OK',
+                'message' => $producto
+            ]);
+        }
     }
 
     /**
@@ -45,7 +69,22 @@ class ProductoController extends Controller
      */
     public function show($id)
     {
-        //
+        try {
+            $consulta=producto::where('id',$id)->first();
+
+
+
+        } catch (QueryException $e) {
+            return response()->json([
+                'status' => 'ERROR',
+                'message' => $e->getMessage()
+            ]);
+        }finally{
+            return response()->json([
+                'status' => 'OK',
+                'message' => $consulta
+            ]);
+        }
     }
 
     /**
@@ -68,7 +107,33 @@ class ProductoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $producto=producto::where('id',$id)->first();
+            if (!$producto) {
+                return response()->json([
+                    'status' => 'ERROR',
+                    'message' => 'No existe el producto'
+                ]);
+            }
+            $producto->update([
+                'descripcion'=>$request['descripcion'],
+                'proveedores_id'=>$request['proveedores_id'],
+                'precio_costo'=>$request['precio_costo'],
+                'precio_venta'=>$request['precio_venta'],
+                'foto'=>$request['foto'],
+            ]);
+
+        } catch (QueryException $e) {
+            return response()->json([
+                'status' => 'ERROR',
+                'message' => $e->getMessage()
+            ]);
+        }finally{
+            return response()->json([
+                'status' => 'OK',
+                'message' => $producto
+            ]);
+        }
     }
 
     /**
@@ -79,6 +144,33 @@ class ProductoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $producto=producto::where('id',$id)->first();
+            if (!$producto) {
+                return response()->json([
+                    'status' => 'ERROR',
+                    'message' => 'No existe el producto'
+                ]);
+            }
+            if(!$producto->delete()){
+                return response()->json([
+                    'status'=>'ERROR',
+                    'mensaje'=>'El producto no fue Eliminado correctamente'
+                ]);
+            }
+
+        } catch (QueryException $e) {
+            return response()->json([
+                'status' => 'ERROR',
+                'message' => $e->getMessage()
+            ]);
+        }finally{
+            return response()->json([
+                'status' => 'ELIMINADO',
+                'mensaje'=>'El producto  fue Eliminado correctamente'
+
+            ]);
+        }
+
     }
 }

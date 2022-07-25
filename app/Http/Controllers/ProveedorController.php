@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\proveedor;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class ProveedorController extends Controller
@@ -13,7 +15,8 @@ class ProveedorController extends Controller
      */
     public function index()
     {
-        //
+        $consulta=proveedor::all();
+        return $consulta;
     }
 
     /**
@@ -34,7 +37,27 @@ class ProveedorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $proveedor=proveedor::create([
+                'nombre'=>$request['nombre'],
+                'nit'=>$request['nit'],
+                'telefono'=>$request['telefono'],
+                'direccion'=>$request['direccion'],
+            ]);
+
+
+
+        } catch (QueryException $e) {
+            return response()->json([
+                'status' => 'ERROR',
+                'message' => $e->getMessage()
+            ]);
+        }finally{
+            return response()->json([
+                'status' => 'OK',
+                'message' => $proveedor
+            ]);
+        }
     }
 
     /**
@@ -45,7 +68,22 @@ class ProveedorController extends Controller
      */
     public function show($id)
     {
-        //
+        try {
+            $consulta=proveedor::where('id',$id)->first();
+
+
+
+        } catch (QueryException $e) {
+            return response()->json([
+                'status' => 'ERROR',
+                'message' => $e->getMessage()
+            ]);
+        }finally{
+            return response()->json([
+                'status' => 'OK',
+                'message' => $consulta
+            ]);
+        }
     }
 
     /**
@@ -68,7 +106,33 @@ class ProveedorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $proveedor=proveedor::where('id',$id)->first();
+            if (!$proveedor) {
+                return response()->json([
+                    'status' => 'ERROR',
+                    'message' => 'No existe el proveedor'
+                ]);
+            }
+            $proveedor->update([
+
+                'nombre'=>$request['nombre'],
+                'nit'=>$request['nit'],
+                'telefono'=>$request['telefono'],
+                'direccion'=>$request['direccion'],
+            ]);
+
+        } catch (QueryException $e) {
+            return response()->json([
+                'status' => 'ERROR',
+                'message' => $e->getMessage()
+            ]);
+        }finally{
+            return response()->json([
+                'status' => 'OK',
+                'message' => $proveedor
+            ]);
+        }
     }
 
     /**
@@ -79,6 +143,33 @@ class ProveedorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $proveedor=proveedor::where('id',$id)->first();
+            if (!$proveedor) {
+                return response()->json([
+                    'status' => 'ERROR',
+                    'message' => 'No existe el proveedor'
+                ]);
+            }
+            if(!$proveedor->delete()){
+                return response()->json([
+                    'status'=>'ERROR',
+                    'mensaje'=>'El proveedor no fue Eliminado correctamente'
+                ]);
+            }
+
+        } catch (QueryException $e) {
+            return response()->json([
+                'status' => 'ERROR',
+                'message' => $e->getMessage()
+            ]);
+        }finally{
+            return response()->json([
+                'status' => 'ELIMINADO',
+                'mensaje'=>'El proveedor  fue Eliminado correctamente'
+
+            ]);
+        }
+
     }
 }
