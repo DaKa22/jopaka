@@ -16,7 +16,10 @@ class ClienteController extends Controller
     public function index()
     {
         $consulta=cliente::all();
-        return $consulta;
+        return view('clientes.cliente', ['clientes' => $consulta]);
+        // return $consulta;
+        // return response()->json($clientes=cliente::paginate(2));
+
     }
 
     /**
