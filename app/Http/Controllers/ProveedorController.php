@@ -47,7 +47,7 @@ class ProveedorController extends Controller
                         'message' => 'No existe El proveedor.'
                     ]);
                 }
-                $proveedor=proveedor::create([
+                $proveedor->update([
                     'nombre'=>$request['nombre'],
                     'nit'=>$request['nit'],
                     'telefono'=>$request['telefono'],
