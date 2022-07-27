@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\producto;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
@@ -19,7 +20,14 @@ class ProductoController extends Controller
         return view('productos.producto', ['productos' => $consulta]);
         // return $consulta;
     }
-
+    public function imprimir()
+    {
+        $producto=producto::all();
+        $pdf= Pdf::loadView('productos.pdf',['productos' => $producto]);
+        $pdf->setPaper('A3', 'landscape');
+        // $pdf->setPaper('A3');
+        return $pdf->download('productos.pdf');
+    }
     /**
      * Show the form for creating a new resource.
      *

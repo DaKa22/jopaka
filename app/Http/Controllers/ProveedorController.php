@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\proveedor;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
@@ -20,6 +21,14 @@ class ProveedorController extends Controller
 
     }
 
+    public function imprimir()
+    {
+        $proveedor=proveedor::all();
+        $pdf= Pdf::loadView('proveedores.pdf',['proveedores' => $proveedor]);
+        // $pdf->setPaper('A3', 'landscape');
+        $pdf->setPaper('A3');
+        return $pdf->download('proveedores.pdf');
+    }
     /**
      * Show the form for creating a new resource.
      *

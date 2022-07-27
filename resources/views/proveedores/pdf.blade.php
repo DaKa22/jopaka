@@ -10,7 +10,7 @@
 
     <head>
         <meta charset="utf-8" />
-        <title>JoPaKa | Clientes </title>
+        <title>JoPaKa | Proveedores </title>
 
         <!-- App favicon -->
 
@@ -52,7 +52,7 @@
                                 <div class="col-xl-12">
                                     <div class="card">
                                         <div class="card-body">
-                                            <h4 class="header-title">Reporte de Clientes</h4>
+                                            <h4 class="header-title">Reporte de Proveedores</h4>
 
 
 
@@ -62,23 +62,21 @@
                                                     <thead>
                                                         <tr>
                                                             <th class="text-center align-middle" style="max-width: 1rem">#</th>
-                                                            <th class="text-center align-middle" style="max-width: 10rem">Identificacion</th>
-                                                            <th class="text-center align-middle" style="max-width: 8rem">Nombres</th>
-                                                            <th class="text-center align-middle" style="max-width: 8rem">Apellidos</th>
+                                                            <th class="text-center align-middle" style="max-width: 8rem">Nombre</th>
+                                                            <th class="text-center align-middle" style="max-width: 10rem">Nit</th>
                                                             <th class="text-center align-middle" style="max-width: 8rem">telefono</th>
                                                             <th class="text-center align-middle" style="max-width: 8rem">direccion</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @foreach ($clientes as $cliente)
+                                                        @foreach ($proveedores as $proveedor)
                                                             <tr>
-                                                                <th scope="row">{{ $cliente['id'] }}</th>
+                                                                <th scope="row">{{ $proveedor['id'] }}</th>
 
-                                                                <td>{{ $cliente->identificacion }}</td>
-                                                                <td>{{ $cliente->nombres }}</td>
-                                                                <td>{{ $cliente->apellidos }}</td>
-                                                                <td>{{ $cliente->telefono }}</td>
-                                                                <td>{{ $cliente->direccion }}</td>
+                                                                <td>{{ $proveedor->nombre }}</td>
+                                                                <td>{{ $proveedor->nit }}</td>
+                                                                <td>{{ $proveedor->telefono }}</td>
+                                                                <td>{{ $proveedor->direccion }}</td>
                                                             </tr>
                                                         @endforeach
 
