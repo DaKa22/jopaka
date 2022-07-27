@@ -16,7 +16,8 @@ class ProveedorController extends Controller
     public function index()
     {
         $consulta=proveedor::all();
-        return $consulta;
+        return view('proveedores.proveedor', ['proveedores' => $consulta]);
+
     }
 
     /**
@@ -37,26 +38,63 @@ class ProveedorController extends Controller
      */
     public function store(Request $request)
     {
-        try {
-            $proveedor=proveedor::create([
-                'nombre'=>$request['nombre'],
-                'nit'=>$request['nit'],
-                'telefono'=>$request['telefono'],
-                'direccion'=>$request['direccion'],
-            ]);
-
-
-
-        } catch (QueryException $e) {
-            return response()->json([
-                'status' => 'ERROR',
-                'message' => $e->getMessage()
-            ]);
-        }finally{
-            return response()->json([
-                'status' => 'OK',
-                'message' => $proveedor
-            ]);
+        if($request['id']){
+            try {
+                $proveedor=proveedor::find($request['id']);
+                if(!$proveedor) {
+                    return response()->json([
+                        'status' => 'ERROR',
+                        'message' => 'No existe El proveedor.'
+                    ]);
+                }
+                $proveedor=proveedor::create([
+                    'nombre'=>$request['nombre'],
+                    'nit'=>$request['nit'],
+                    'telefono'=>$request['telefono'],
+                    'direccion'=>$request['direccion'],
+                ]);
+                if($proveedor->save()){
+                    return redirect()->back()->with([
+                        'created' => 1,
+                        'mensaje' => 'El Proveedor se  Actualizo Correctamente'
+                    ]);
+                }else {
+                    return redirect()->back()->with([
+                        'created' => 0,
+                        'mensaje' => 'El Proveedor NO se  Actualizo Correctamente'
+                    ]);
+                }
+            } catch (QueryException $e) {
+                return response()->json([
+                    'status' => 'ERROR',
+                    'message' => $e->getMessage()
+                ]);
+            }
+        }else{
+            try {
+                $proveedor=proveedor::create([
+                    'nombre'=>$request['nombre'],
+                    'nit'=>$request['nit'],
+                    'telefono'=>$request['telefono'],
+                    'direccion'=>$request['direccion'],
+                ]);
+                if($proveedor){
+                    return redirect()->back()->with([
+                        'created' => 1,
+                        'mensaje' => 'El Proveedor se creo correctamente'
+                    ]);
+                }else {
+                    return redirect()->back()->with([
+                        'created' => 0,
+                        'mensaje' => 'El Proveedor NO se creo correctamente'
+                    ]);
+                }
+            } catch (QueryException $e) {
+                return response()->json([
+                    'status' => 'ERROR',
+                    'message' => $e->getMessage()
+                ]);
+            }
         }
     }
 
@@ -69,8 +107,13 @@ class ProveedorController extends Controller
     public function show($id)
     {
         try {
-            $consulta=proveedor::where('id',$id)->first();
-
+            $consulta=proveedor::find($id);
+            if(!$consulta){
+                return response()->json([
+                    'status' => 'ERROR',
+                    'message' => 'Proveedor NO fue encontrado'
+                ]);
+            }
 
 
         } catch (QueryException $e) {

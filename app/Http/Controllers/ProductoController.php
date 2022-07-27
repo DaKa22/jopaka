@@ -16,7 +16,8 @@ class ProductoController extends Controller
     public function index()
     {
         $consulta=producto::all();
-        return $consulta;
+        return view('productos.producto', ['productos' => $consulta]);
+        // return $consulta;
     }
 
     /**
@@ -37,27 +38,65 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        try {
-            $producto=producto::create([
-                'descripcion'=>$request['descripcion'],
-                'proveedores_id'=>$request['proveedores_id'],
-                'precio_costo'=>$request['precio_costo'],
-                'precio_venta'=>$request['precio_venta'],
-                'foto'=>$request['foto'],
-            ]);
-
-
-
-        } catch (QueryException $e) {
-            return response()->json([
-                'status' => 'ERROR',
-                'message' => $e->getMessage()
-            ]);
-        }finally{
-            return response()->json([
-                'status' => 'OK',
-                'message' => $producto
-            ]);
+        if($request['id']){
+            try {
+                $producto=producto::find($request['id']);
+                if(!$producto) {
+                    return response()->json([
+                        'status' => 'ERROR',
+                        'message' => 'No existe El producto.'
+                    ]);
+                }
+                $producto->update([
+                    'descripcion'=>$request['descripcion'],
+                    'proveedores_id'=>$request['proveedores_id'],
+                    'precio_costo'=>$request['precio_costo'],
+                    'precio_venta'=>$request['precio_venta'],
+                    'foto'=>$request['foto'],
+                ]);
+                if($producto->save()){
+                    return redirect()->back()->with([
+                        'created' => 1,
+                        'mensaje' => 'El producto se  Actualizo Correctamente'
+                    ]);
+                }else {
+                    return redirect()->back()->with([
+                        'created' => 0,
+                        'mensaje' => 'El producto NO se  Actualizo Correctamente'
+                    ]);
+                }
+            } catch (QueryException $e) {
+                return response()->json([
+                    'status' => 'ERROR',
+                    'message' => $e->getMessage()
+                ]);
+            }
+        }else{
+            try {
+                $producto=producto::create([
+                    'descripcion'=>$request['descripcion'],
+                    'proveedores_id'=>$request['proveedores_id'],
+                    'precio_costo'=>$request['precio_costo'],
+                    'precio_venta'=>$request['precio_venta'],
+                    'foto'=>$request['foto'],
+                ]);
+                if($producto){
+                    return redirect()->back()->with([
+                        'created' => 1,
+                        'mensaje' => 'El producto se creo correctamente'
+                    ]);
+                }else {
+                    return redirect()->back()->with([
+                        'created' => 0,
+                        'mensaje' => 'El producto NO se creo correctamente'
+                    ]);
+                }
+            } catch (QueryException $e) {
+                return response()->json([
+                    'status' => 'ERROR',
+                    'message' => $e->getMessage()
+                ]);
+            }
         }
     }
 
@@ -70,7 +109,7 @@ class ProductoController extends Controller
     public function show($id)
     {
         try {
-            $consulta=producto::where('id',$id)->first();
+            $consulta=producto::find($id);
 
 
 
@@ -108,7 +147,7 @@ class ProductoController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $producto=producto::where('id',$id)->first();
+            $producto=producto::find($id);
             if (!$producto) {
                 return response()->json([
                     'status' => 'ERROR',
@@ -145,17 +184,22 @@ class ProductoController extends Controller
     public function destroy($id)
     {
         try {
-            $producto=producto::where('id',$id)->first();
+            $producto=producto::find($id);
             if (!$producto) {
                 return response()->json([
                     'status' => 'ERROR',
                     'message' => 'No existe el producto'
                 ]);
             }
-            if(!$producto->delete()){
-                return response()->json([
-                    'status'=>'ERROR',
-                    'mensaje'=>'El producto no fue Eliminado correctamente'
+            if($producto->delete()){
+                return redirect()->back()->with([
+                    'created' => 1,
+                    'mensaje' => 'El producto se Elimino Correctamente'
+                ]);
+            }else {
+                return redirect()->back()->with([
+                    'created' => 0,
+                    'mensaje' => 'El producto NO se Elimino Correctamente'
                 ]);
             }
 
@@ -163,12 +207,6 @@ class ProductoController extends Controller
             return response()->json([
                 'status' => 'ERROR',
                 'message' => $e->getMessage()
-            ]);
-        }finally{
-            return response()->json([
-                'status' => 'ELIMINADO',
-                'mensaje'=>'El producto  fue Eliminado correctamente'
-
             ]);
         }
 
