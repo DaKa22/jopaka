@@ -40,27 +40,65 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        try {
-            $cliente=cliente::create([
-                'identificacion'=>$request['identificacion'],
-                'nombres'=>$request['nombres'],
-                'apellidos'=>$request['apellidos'],
-                'telefono'=>$request['telefono'],
-                'direccion'=>$request['direccion'],
-            ]);
-
-
-
-        } catch (QueryException $e) {
-            return response()->json([
-                'status' => 'ERROR',
-                'message' => $e->getMessage()
-            ]);
-        }finally{
-            return response()->json([
-                'status' => 'OK',
-                'message' => $cliente
-            ]);
+        if($request['id']){
+            try {
+                $cliente=cliente::find($request['id']);
+                if(!$cliente) {
+                    return response()->json([
+                        'status' => 'ERROR',
+                        'message' => 'No existe El Cliente.'
+                    ]);
+                }
+                $cliente->update([
+                    'identificacion'=>$request['identificacion'],
+                    'nombres'=>$request['nombres'],
+                    'apellidos'=>$request['apellidos'],
+                    'telefono'=>$request['telefono'],
+                    'direccion'=>$request['direccion'],
+                ]);
+                if($cliente->save()){
+                    return redirect()->back()->with([
+                        'created' => 1,
+                        'mensaje' => 'El Cliente se  Actualizo Correctamente'
+                    ]);
+                }else {
+                    return redirect()->back()->with([
+                        'created' => 0,
+                        'mensaje' => 'El Cliente NO se  Actualizo Correctamente'
+                    ]);
+                }
+            } catch (QueryException $e) {
+                return response()->json([
+                    'status' => 'ERROR',
+                    'message' => $e->getMessage()
+                ]);
+            }
+        }else{
+            try {
+                $cliente=cliente::create([
+                    'identificacion'=>$request['identificacion'],
+                    'nombres'=>$request['nombres'],
+                    'apellidos'=>$request['apellidos'],
+                    'telefono'=>$request['telefono'],
+                    'direccion'=>$request['direccion'],
+                ]);
+                if($cliente){
+                    return redirect()->back()->with([
+                        'created' => 1,
+                        'mensaje' => 'El Cliente se creo correctamente'
+                    ]);
+                }else {
+                    return redirect()->back()->with([
+                        'created' => 0,
+                        'mensaje' => 'El Cliente NO se creo correctamente'
+                    ]);
+                }
+            } catch (QueryException $e) {
+                return response()->json([
+                    'status' => 'ERROR',
+                    'message' => $e->getMessage()
+                ]);
+            }
         }
     }
 
@@ -73,10 +111,15 @@ class ClienteController extends Controller
     public function show($id)
     {
         try {
-            $consulta=cliente::where('id',$id)->first();
+            $consulta=cliente::find($id);
 
 
-
+            if(!$consulta){
+                return response()->json([
+                    'status' => 'ERROR',
+                    'message' => 'Cliente NO fue encontrado'
+                ]);
+            }
         } catch (QueryException $e) {
             return response()->json([
                 'status' => 'ERROR',
@@ -156,10 +199,15 @@ class ClienteController extends Controller
                     'message' => 'No existe el cliente'
                 ]);
             }
-            if(!$cliente->delete()){
-                return response()->json([
-                    'status'=>'ERROR',
-                    'mensaje'=>'El Cliente no fue Eliminado correctamente'
+            if($cliente->delete()){
+                return redirect()->back()->with([
+                    'created' => 1,
+                    'mensaje' => 'El Cliente se Elimino Correctamente'
+                ]);
+            }else {
+                return redirect()->back()->with([
+                    'created' => 0,
+                    'mensaje' => 'El Cliente NO se Elimino Correctamente'
                 ]);
             }
 
@@ -167,12 +215,6 @@ class ClienteController extends Controller
             return response()->json([
                 'status' => 'ERROR',
                 'message' => $e->getMessage()
-            ]);
-        }finally{
-            return response()->json([
-                'status' => 'ELIMINADO',
-                'mensaje'=>'El Cliente  fue Eliminado correctamente'
-
             ]);
         }
 
