@@ -19,14 +19,14 @@
 
                 <li>
                     <a href="" class=" waves-effect">
-                        {{-- <a href="{{route('tabla_estudio.index')}}" class=" waves-effect"> --}}
+                        <a href="{{route('proveedor.index')}}" class=" waves-effect">
                         <div class="d-inline-block icons-sm mr-1"><i class="uim uim-briefcase"></i></div>
                         <span>Proveedor</span>
                     </a>
                 </li>
                 <li>
                     <a href="" class=" waves-effect">
-                        {{-- <a href="{{route('historial_laboral.index')}}" class=" waves-effect"> --}}
+                        <a href="{{route('producto.index')}}" class=" waves-effect">
                         <div class="d-inline-block icons-sm mr-1"><i class="uim uim-briefcase"></i></div>
                         <span>Producto</span>
                     </a>

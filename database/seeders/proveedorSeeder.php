@@ -41,7 +41,7 @@ class proveedorSeeder extends Seeder
             ],
             [
                 'nombre'=> 'AliExpress' ,
-                'nit'=> 891100654,
+                'nit'=> 891100652,
                 'telefono'=> 3112305184,
                 'direccion' => 'Calle 55 #45-57'
             ],
