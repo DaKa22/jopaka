@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\cliente;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
@@ -21,7 +23,13 @@ class ClienteController extends Controller
         // return response()->json($clientes=cliente::paginate(2));
 
     }
-
+    public function imprimir()
+    {
+        $clientes=cliente::all();
+        $pdf= Pdf::loadView('clientes.pdf',['clientes' => $clientes]);
+        $pdf->setPaper('A3');
+        return $pdf->download('clientes.pdf');
+    }
     /**
      * Show the form for creating a new resource.
      *

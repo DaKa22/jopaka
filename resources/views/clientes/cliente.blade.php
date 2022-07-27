@@ -21,7 +21,7 @@
                             <button class="btn btn-light btn-rounded" type="button" data-toggle="modal" data-target="#modal_crearCliente">
                                 <i class="mdi mdi-plus mr-1"></i> Agregar
                             </button>
-                            {{--  <a href="{{route('imprimir.users')}}">  --}}
+                            <a href="{{route('pdf.cliente')}}">
                                 <button class="btn btn-light btn-rounded" type="button" >
                                     <i class="mdi mdi-plus mr-1"></i> PDF
                                 </button>

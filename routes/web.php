@@ -24,6 +24,7 @@ Route::group([
     Route::get('', function () {return view('welcome');});
 
     Route::resource('cliente', ClienteController::class);
+    Route::get('pdf_cliente', [ClienteController::class, 'imprimir'])->name('pdf.cliente');
     Route::resource('proveedor', ProveedorController::class);
     Route::resource('factura', FacturaController::class);
     Route::resource('producto', ProductoController::class);
