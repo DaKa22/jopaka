@@ -192,7 +192,7 @@ class ClienteController extends Controller
     public function destroy($id)
     {
         try {
-            $cliente=cliente::where('id',$id)->first();
+            $cliente=cliente::find($id);
             if (!$cliente) {
                 return response()->json([
                     'status' => 'ERROR',
