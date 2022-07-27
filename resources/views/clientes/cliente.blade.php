@@ -64,10 +64,10 @@
                             <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="View">
                                 <i class="mdi mdi-eye"></i>
                             </button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
+                            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="updateCliente({{ $cliente['id'] }})" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
                                 <i class="mdi mdi-pencil"></i>
                             </button>
-                            <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete">
+                            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="deleteCliente({{ $cliente['id'] }})" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete">
                                 <i class="mdi mdi-trash-can"></i>
                             </button>
                         </div>
