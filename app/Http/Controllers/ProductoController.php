@@ -16,7 +16,8 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        $consulta=producto::all();
+        // $consulta=producto::all();
+        $consulta=producto::with('proveedores')->get();
         return view('productos.producto', ['productos' => $consulta]);
         // return $consulta;
     }
