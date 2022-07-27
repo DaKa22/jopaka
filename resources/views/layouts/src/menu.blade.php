@@ -11,7 +11,7 @@
 
                 <li>
                     {{-- <a href="{{route('user.index')}}" class=" waves-effect"> --}}
-                    <a href="{{ route('cliente.index') }}" class=" waves-effect">
+                    <a href="{{ route('cliente.index') }}" class=" waves-effect text-dark">
                         <div class="d-inline-block icons-sm mr-1"><i class="uim uim-briefcase"></i></div>
                         <span>Clientes</span>
                     </a>
