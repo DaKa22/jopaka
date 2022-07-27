@@ -20,12 +20,12 @@
             </button>
 
             <!-- App Search-->
-            <form class="app-search d-none d-lg-block">
+            {{-- <form class="app-search d-none d-lg-block">
                 <div class="position-relative">
                     <input type="text" class="form-control" placeholder="Buscar...">
                     <span class="mdi mdi-magnify"></span>
                 </div>
-            </form>
+            </form> --}}
         </div>
 
         <div class="d-flex">

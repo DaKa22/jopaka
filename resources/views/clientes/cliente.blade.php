@@ -3,14 +3,14 @@
 @section('content')
 
 <div class="card-body">
-    <div class="float-right ml-2">
+    {{-- <div class="float-right ml-2">
         <a href="#">View all</a>
-    </div>
-    <h5 class="header-title mb-4">Latest Transaction</h5>
+    </div> --}}
+    <h1 class="header-title mb-4">TABLA DE CLIENTES</h1>
 
-    <div class="table-responsive">
+    <div class="table-responsive table-bordered">
         <table class="table table-centered table-hover mb-0">
-            <thead>
+            <thead class="bg-light">
                 <tr>
                     <th scope="col"> ID</th>
                     <th scope="col">Identificacion</th>
