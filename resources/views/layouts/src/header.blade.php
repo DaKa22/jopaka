@@ -5,10 +5,10 @@
             <div class="navbar-brand-box">
                 <a href="/" class="logo logo-dark">
                     <span class="logo-sm" >
-                        <img src="{{asset('assets/images/logo-sm-dark.png')}}" alt="" height="40">
+                        <img src="{{asset('assets/images/Logo2.png')}}" alt="" height=40 >
                     </span>
                     <span class="logo-lg">
-                        <img src="{{asset('assets/images/logo-dark.png')}}" alt="" height="70">
+                        <img src="{{asset('assets/images/Logo.png')}}" alt="" height=57 >
                     </span>
                 </a>
 
