@@ -18,10 +18,11 @@
                 <div class="col-md-4">
                     <div class="float-right d-none d-md-block">
                         <div class="dropdown">
-                            <button class="btn btn-light btn-rounded" type="button" data-toggle="modal" data-target="#modal_crearProveedor">
+                            <button class="btn btn-light btn-rounded" type="button"onclick="crearProveedor()" data-toggle="tooltip" data-placement="top">
+
                                 <i class="mdi mdi-plus mr-1"></i> Agregar
                             </button>
-                            {{--  <a href="{{route('imprimir.users')}}">  --}}
+                            <a href="{{route('pdf.proveedor')}}">
                                 <button class="btn btn-light btn-rounded" type="button" >
                                     <i class="mdi mdi-plus mr-1"></i> PDF
                                 </button>

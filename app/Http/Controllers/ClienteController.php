@@ -27,6 +27,7 @@ class ClienteController extends Controller
     {
         $clientes=cliente::all();
         $pdf= Pdf::loadView('clientes.pdf',['clientes' => $clientes]);
+        // $pdf->setPaper('A3', 'landscape');
         $pdf->setPaper('A3');
         return $pdf->download('clientes.pdf');
     }
