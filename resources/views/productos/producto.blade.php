@@ -18,10 +18,10 @@
                 <div class="col-md-4">
                     <div class="float-right d-none d-md-block">
                         <div class="dropdown">
-                            <button class="btn btn-light btn-rounded" type="button" data-toggle="modal" data-target="#modal_crearProducto">
+                                <button class="btn btn-light btn-rounded" type="button"onclick="crearProducto()" data-toggle="tooltip" data-placement="top">
                                 <i class="mdi mdi-plus mr-1"></i> Agregar
                             </button>
-                            {{-- <a href="{{route('pdf.producto')}}"> --}}
+                            <a href="{{route('pdf.producto')}}">
                                 <button class="btn btn-light btn-rounded" type="button" >
                                     <i class="mdi mdi-plus mr-1"></i> PDF
                                 </button>
@@ -106,9 +106,18 @@
                             <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="Escriba La Descripcion" required>
                         </div>
                         <div class="col-md-12 mb-3">
+                            <label for="descripcion">Proveedor</label>
+                            <select name="proveedores_id" id="proveedores_id" class="form-control">
+                                <option value="" selected disabled>Seleccione un Proveedor</option>
+                                @foreach ($proveedores as $proveedor)
+                                    <option value="{{$proveedor['id']}}">{{$proveedor['nombre']}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        {{--  <div class="col-md-12 mb-3">
                             <label for="proveedores_id">Provedores_Id</label>
                             <input type="text" class="form-control" id="proveedores_id" name="proveedores_id" placeholder="Escriba Id Del Provedor" required>
-                        </div>
+                        </div>  --}}
                         <div class="col-md-12 mb-3">
                             <label for="precio_costo">Precio Costo</label>
                             <input type="number" class="form-control" id="precio_costo" name="precio_costo" placeholder="Escriba El Precio De Costo" required>

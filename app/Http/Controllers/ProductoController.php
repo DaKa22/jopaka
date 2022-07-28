@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\producto;
+use App\Models\proveedor;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -18,7 +19,8 @@ class ProductoController extends Controller
     {
         // $consulta=producto::all();
         $consulta=producto::with('proveedores')->get();
-        return view('productos.producto', ['productos' => $consulta]);
+        $consulta2=proveedor::all();
+        return view('productos.producto', ['productos' => $consulta, 'proveedores' => $consulta2]);
         // return $consulta;
     }
     public function imprimir()

@@ -41,6 +41,17 @@ function updateCliente(id){
         }
     });
 }
+function crearCliente(){
+    $("#identificacion").val('')
+    $('#nombres').val('')
+    $('#apellidos').val('')
+    $('#telefono').val('')
+    $('#direccion').val('')
+    $("#id").val('')
+    $("#titulo").text("Agregar Cliente")
+    $("#modal_crearCliente").modal("show")
+
+}
 
 function deleteProveedor(id){
     if(confirm('¿Estas seguro de eliminar?')){
@@ -79,6 +90,16 @@ function updateProveedor(id){
     });
 }
 
+function crearProveedor(){
+    $("#nombre").val('')
+    $('#nit').val('')
+    $('#telefono').val('')
+    $('#direccion').val('')
+    $("#id").val('')
+    $("#titulo").text("Agregar Proveedor")
+    $("#modal_crearProveedor").modal("show")
+
+}
 
 function deleteProducto(id){
     if(confirm('¿Estas seguro de eliminar?')){
@@ -116,4 +137,16 @@ function updateProducto(id){
             $("#titulo").text("Editar Producto")
         }
     });
+}
+
+function crearProducto(){
+    $("#foto").val('')
+    $('#descripcion').val('')
+    $('#proveedores_id').val('')
+    $('#precio_costo').val('')
+    $('#precio_venta').val('')
+    $("#id").val('')
+    $("#titulo").text("Agregar Producto")
+    $("#modal_crearProducto").modal("show")
+
 }
