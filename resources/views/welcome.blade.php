@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('titulo') david @endsection
+@section('titulo') jopaka @endsection
 @section('content')
 
 

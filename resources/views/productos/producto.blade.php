@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="card-body ">
-    <div class="page-title-box bg-danger">
+    <div class="page-title-box bg-danger rounded pt-2 pb-2">
         <div class="container-fluid">
             <div class="row align-items-center">
                 <div class="col-md-8">
@@ -12,7 +12,7 @@
                                 {{ session('mensaje') }}
                             </div>
                         @endif
-                    <h4 class="page-title mb-1">TABLA DE PRODUCTOS</h4>
+                    <h4 class="page-title mt-3">TABLA DE PRODUCTOS</h4>
 
                 </div>
                 <div class="col-md-4">
@@ -35,7 +35,7 @@
         </div>
     </div>
     <div class="table-responsive table-bordered">
-        <table class="table table-centered table-hover mb-0">
+        <table class="table table-centered table-hover mb-0 mt-2">
             <thead class="bg-light">
                 <tr>
                     <th scope="col"> ID</th>
